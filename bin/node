@@ -1,0 +1,14 @@
+#!/bin/bash
+
+EXECUTABLE=$(basename $0| sed 's/[0-9*.]//g')
+VERSION=$(basename $0| sed 's/[a-z-]//g')
+if [ "$VERSION" == "" ] || [ ! "$VERSION" ]; then
+	VERSION="latest"
+fi
+
+docker run -it --rm \
+	-v $SSH_AUTH_SOCK:/ssh-agent --env SSH_AUTH_SOCK=/ssh-agent \
+	-v $HOME/.ssh/:/home/developer/.ssh/:ro \
+	-v $(pwd):/usr/app \
+	nouchka/node:$VERSION \
+	$EXECUTABLE "$@"
