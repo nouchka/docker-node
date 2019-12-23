@@ -4,6 +4,8 @@ VERSIONS=8 13
 include Makefile.docker
 
 PACKAGE_VERSION=0.1
+DEBVERSIONS=8 13
+DUPLICATE_BIN_NAME=npm
 
 include Makefile.package
 
@@ -13,10 +15,9 @@ check-version:
 
 deb:
 	mkdir -p build/usr/sbin/
+	$(foreach bin,$(DUPLICATE_BIN_NAME), cp bin/$(DOCKER_IMAGE) bin/$(bin);)
 	cp -Rf bin/* build/usr/sbin/
-	cp bin/node build/usr/sbin/npm
-	$(foreach version,$(DEBVERSIONS), cp bin/node build/usr/sbin/node$(version);)
-	$(foreach version,$(DEBVERSIONS), cp bin/node build/usr/sbin/npm$(version);)
+	$(foreach version,$(DEBVERSIONS), for file in bin/* ; do cp $$file build/usr/s$$file\$(version) ; done;)
 
 run:
 	./bin/$(DOCKER_IMAGE) --version
