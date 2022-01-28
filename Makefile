@@ -1,5 +1,4 @@
 DOCKER_IMAGE=node
-VERSIONS=8 13
 
 include Makefile.docker
 
