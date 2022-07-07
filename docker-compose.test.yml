@@ -1,4 +1,4 @@
 sut:
   build: .
   entrypoint: node
-  command: version
+  command: -v
